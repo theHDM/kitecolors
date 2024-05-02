@@ -160,20 +160,41 @@ float lightnessAtGivenSaturation(float hue, float sat) {
 
 okLCHcolor getLCHcolorFromMonzo(std::vector<int> monzo) {
   std::size_t mSize = std::distance(monzo.begin(), monzo.end());
+  float tempHue = neutralHueAngle;
+  float tempChroma = 0.0;
+  float tempLightness = 50.0;
+  int tempFifths = 0;
+  float tempRatio = 0.0;
+  int totalFifths = 0;
+  float totalComma = 0.0;
+  int totalWolfs = 0;
+  for (int p = 0; p < mSize; p++) {
+    tempRatio = (float)getNthPrime(p + 1);
+    tempFifths = closestNumberOfFifths(tempRatio);
+    totalComma += monzo[p] * commaFromFifths(tempFifths, tempRatio);
+    totalFifths += tempFifths;
+  }
+
+  if (abs(totalFifths) >= addWolfCommaAfterThisManyFifths) {
+    int direction = ((totalFifths > 0) ? 1 : -1);
+    while (abs(totalFifths) >= addWolfCommaAfterThisManyFifths) {
+      totalFifths -= 12 * direction;
+      totalWolfs += direction;
+    }
+  }
+  totalComma += totalWolfs * /* 27.0 */ ;
+  
+  tempHue = calculateHueBasedOnFifths(totalFifths, totalComma);
+  
+
 
 // calc H C L per prime
 // decompose monzo into primes
 // calculate fifths & commas & any wolf
+ok total fifths and comma done.
 // calculate hue from cents
 // calculate C and L from primes
-  float tempHue = neutralHueAngle;
-  float tempChroma = 0.0;
-  float tempLightness = 50.0;
-  for (int p = 0; p < mSize, p++) {
-    if (monzo[p] != 0) {
 
-    }
-  }
 
 
 
