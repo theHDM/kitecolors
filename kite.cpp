@@ -273,11 +273,12 @@ okLCHcolor getLCHcolorFromMonzo(std::vector<int> monzo) {
   return {tempLightness, tempChroma, tempHue};
 }
 
-int main() {
-    okLCHcolor result = getLCHcolorFromMonzo({1,0,1,-1});
-    std::cout << "hue: " << result.hue << " lightness: " << result.lightness << " chroma: " << result.chroma << "\n";
-    sRGBcolor resultRGB = toRGB(result);
-    std::cout << "R: " << resultRGB.R << " G: " << resultRGB.G << " B: " << resultRGB.B << "\n";
+sRGBcolor getRGBcolorFromMonzo(std::vector<int> monzo) {
+  return toRGB(getLCHcolorFromMonzo(monzo));
+}
 
+int main() {
+    sRGBcolor result = getRGBcolorFromMonzo({1,0,1,-1});
+    std::cout << "R: " << result.R << " G: " << result.G << " B: " << result.B << "\n";
     return 0;
 }
